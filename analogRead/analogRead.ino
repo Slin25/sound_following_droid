@@ -17,11 +17,13 @@ int collectAmbient() {
 }
 
 void turnLeft() {
-  
+  // pin 5-connected to left wheel, right wheel is faster 
+  digitalWrite(5, LOW);
 }
 
 void turnRight() {
-  
+  // pin 6-connected to right wheel, left wheel is faster 
+  digitalWrite(6, LOW);
 }
 
 int isClap(double mic1, double mic2) {
