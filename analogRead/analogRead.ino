@@ -7,15 +7,14 @@ int ambientLevel;
 
 // setting initial ambient value 
 int collectAmbient() {
-  int initAmbient = 0;
-  // delay for 1 sec (1000 milli sec)
-  delay(1000);
+  float initAmbient = 0;
 
-  // collect 1000 ambient values then take average
-  for (int i = 0; i < 1000; i++) {
-    initAmbient += analogRead(mic1);
+  // collect 250 ambient values then take average
+  for (int i = 0; i < 250; i++) {
+    int test = analogRead(mic1);
+    initAmbient += test;
   }
-  return (initAmbient/1000);
+  return (int)((initAmbient * 1.0)/250.0);
 }
 void moveForward() {
   
