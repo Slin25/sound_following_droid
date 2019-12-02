@@ -54,7 +54,7 @@ void turnRight() {
 
 void isClap(double mic1, double mic2) {
   // above the threshold then it's considered a clap
-  if (mic1 > (ambientLevel * 3) || mic2 > (ambientLevel*3)) {
+  if (mic1 > 10 || mic2 > 10) {
     if (mic1 > mic2) {
       turnLeft();
     } else if (mic2 > mic1) {
@@ -70,6 +70,8 @@ void setup() {
   Serial.begin(9600);
   // read the stable voltage level
   ambientLevel = collectAmbient();
+  Serial.println(ambientLevel);
+  Serial.println(ambientLevel);
   // initialize output pins to control motors
   pinMode(power, OUTPUT);
   pinMode(left, OUTPUT);
@@ -80,6 +82,12 @@ void setup() {
 
 void loop() {
   // put your main code here, to run repeatedly:
+  // turn everything off
+  digitalWrite(power, LOW);
+  digitalWrite(left, LOW);
+  digitalWrite(right, LOW);
+  
+  // read in the values from microphone 
   double mic1Data = analogRead(mic1) - ambientLevel;
   double mic2Data = analogRead(mic2) - ambientLevel;
   
@@ -90,6 +98,7 @@ void loop() {
   if (mic2Data < 0) {
     mic2Data = -1 * mic2Data;
   }
+  isClap(mic1Data, mic2Data);
   // show the graph of the mics
-  Serial.println(analogRead(mic1));
+  //Serial.println(mic1Data-mic2Data);
 }
