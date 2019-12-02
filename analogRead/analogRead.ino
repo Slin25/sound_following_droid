@@ -29,6 +29,7 @@ void moveForward() {
   digitalWrite(power, LOW);
   digitalWrite(left, LOW);
   digitalWrite(right, LOW);
+  delay(500);
 }
 void turnLeft() {
   // pin 11-connected to left wheel, right wheel is faster 
