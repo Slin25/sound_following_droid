@@ -1,5 +1,8 @@
 #define mic1 A1
 #define mic2 A2
+#define power 8
+#define left 11
+#define right 10
 // mic1 - left
 // mic2 - right
 
@@ -17,17 +20,35 @@ int collectAmbient() {
   return (int)((initAmbient * 1.0)/250.0);
 }
 void moveForward() {
-  
+  // both right and left wheel same speed, turn on motors
+  digitalWrite(left, HIGH);
+  digitalWrite(right, HIGH);
+  digitalWrite(power, HIGH);
+  delay(1000);
+  // turn off motors
+  digitalWrite(power, LOW);
+  digitalWrite(left, LOW);
+  digitalWrite(right, LOW);
 }
 void turnLeft() {
-  // pin 5-connected to left wheel, right wheel is faster 
-  digitalWrite(5, LOW);
+  // pin 11-connected to left wheel, right wheel is faster 
+  digitalWrite(left, LOW);
+  digitalWrite(right, HIGH);
+  // turn motor on
+  digitalWrite(power, HIGH);
+  delay(1000);
+  digitalWrite(power, LOW);
   moveForward();
 }
 
 void turnRight() {
-  // pin 6-connected to right wheel, left wheel is faster 
-  digitalWrite(6, LOW);
+  // pin 10-connected to right wheel, left wheel is faster 
+  digitalWrite(right, LOW);
+  digitalWrite(left, HIGH);
+  // turn motor on
+  digitalWrite(power, HIGH);
+  delay(1000);
+  digitalWrite(power, LOW);
   moveForward();
 }
 
@@ -49,6 +70,11 @@ void setup() {
   Serial.begin(9600);
   // read the stable voltage level
   ambientLevel = collectAmbient();
+  // initialize output pins to control motors
+  pinMode(power, OUTPUT);
+  pinMode(left, OUTPUT);
+  pinMode(right, OUTPUT);
+  digitalWrite(power, LOW);
   
 }
 
